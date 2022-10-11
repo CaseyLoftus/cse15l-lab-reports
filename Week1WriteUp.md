@@ -43,6 +43,6 @@ A16860039
 * The TA approved of the commands I was using, so you can refer to these.
 
 ## Optimizing Remote Running
-![](https://user-images.githubusercontent.com/114450184/193363701-640a5dde-bbe0-4ce3-a27f-378bdf754f50.png)
-* Since the key never worked, I wasn't really able to optimize.
-* However, I can imagine it would be pretty easy to copy paste the lengthy scp command, and combine login and running commands and copy paste those as well, saving a lot of time.
+![](https://user-images.githubusercontent.com/114450184/195209429-49a3fd69-fdb5-4164-814e-b99d37fdf587.png)
+* Since the key never worked, I wasn't really able to optimize fully.
+* However, by combining commands and copy pasting them, I was able to greatly reduce keystrokes, aside from having to enter passwords. 
