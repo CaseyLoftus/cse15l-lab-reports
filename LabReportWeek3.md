@@ -78,4 +78,5 @@ static int[] reversed(int[] arr) {
 ## Merge Method Bug
 ![](https://user-images.githubusercontent.com/114450184/195715994-cce6fe2a-9be3-4f74-a063-bf739023f6de.png)
 
+## Connection
 * The out of heap space error usually suggests a loop error that causes it to go on infinitely. This is exactly the case in this example, as in the code bug this while loop proceeds infinitely, as the code iterates the wrong index leading the initial condition to always be true. 
