@@ -13,15 +13,7 @@ find ./technical -mindepth 4
 ./technical/government/About_LSC/fo/fjs
 ```
 * As shown in the path of this file, the depth from the /technical folder is 4, and since it is the only file with this depth it is the only file name printed.
-
-```
-find ./technical -mindepth 3 -maxdepth 5 
-./technical/government/About_LSC/LegalServCorp_v_VelazquezSyllabus.txt
-./technical/government/About_LSC/Progress_report.txt
-./technical/government/About_LSC/Strategic_report.txt
-./technical/government/About_LSC/fo/fjs
-```
-* In this example, there is both a floor and ceiling, and paths with different depths between these are printed.
+* This could be helpful for understanding the orginiztion of a file system, looking at each level of depth.
 
 ```
 find ./technical -maxdepth 1
@@ -32,7 +24,20 @@ find ./technical -maxdepth 1
 ./technical/where
 ./technical/911report
 ```
-* This example demonstrates that maxdepth limits the output to files and folders with a certain depth, so only these files and folders are printed.
+* This example demonstrates that maxdepth limits the output to files and folders with a certain depth, so only these files and folders are printed that are under the specified depth.
+* This is helpful for finding files and folders at the top of a file system. 
+
+```
+find ./technical -mindepth 3 -maxdepth 5 
+./technical/government/About_LSC/LegalServCorp_v_VelazquezSyllabus.txt
+./technical/government/About_LSC/Progress_report.txt
+./technical/government/About_LSC/Strategic_report.txt
+./technical/government/About_LSC/fo/fjs
+```
+* In this example, there is both a floor and ceiling, and paths with different depths between these are printed.
+* This is helpful for understanding the structure of a complex file structure, looking at each teir of depth separately without having to enter each seperate folder. 
+
+
 
 
 **-empty**
@@ -43,19 +48,20 @@ find ./technical -empty
 ```
 * Searches for empty folders and files. 
 * Created two empty files in different paths to demonstrate.
+* This is helpful for finding the paths of all empty folders, so they are easy to locate and delete.
 
 ```
 find ./technical -empty
 ```
 * When there are no empty files, there is no output. There is also no error thrown.
+* Is a simple test for empty files within a file system.
 
 ```
 find ./technical -empty -mindepth 3
 ./technical/government/About_LSC/fo/fjs
 ```
-
 * Used with mindepth to find empty files after a certain path depth.
-* This command is useful for finding obsolete files.
+* This command is useful for finding obsolete files at a certain depth.
 
 **-size**
 
@@ -64,6 +70,7 @@ find ./technical -size 0k
 ./technical/government/About_LSC/fo/fjs
 ```
 * This can be used to the same effect as -empty to find empty files of no size. 
+* This is helpful for finding empty files. 
 
 ```
 find ./technical -size -2k 
@@ -95,6 +102,7 @@ find ./technical -size -2k
 ./technical/911report
 ```
 * This command can also be used to find files with size under a certain amount. 
+* In a file system where size varies greatly, and the size specifies the purpose of a file, this could be helpful for viewing files of a certain type or use. 
 
 ```
 find ./technical -size +0k -size -1k  
