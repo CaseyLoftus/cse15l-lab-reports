@@ -2,37 +2,38 @@
 Casey Loftus
 A16860039
 
-## Less Options
-
-**-N**
-* This option creates line numbers for the less output. 
-* This is helpful for locating where in the file useful information is. 
-![](https://user-images.githubusercontent.com/114450184/199063766-76ff22b1-f834-4f73-b9e8-93183726c336.png)
-![](https://user-images.githubusercontent.com/114450184/199063862-98000ad2-3e94-4926-8b93-5df4cbd821c8.png)
-
-**-S**
-* This option extends long file lines past the command line width limit, and allows the user to scroll horizontally to view the entire line. 
-* This provides more flexibility for viewing options, rather than wrapping every long line.
-![](https://user-images.githubusercontent.com/114450184/199064616-341e369b-d245-4fc0-a995-593f1e470005.png)
-![](https://user-images.githubusercontent.com/114450184/199064676-88b296d7-eb7c-4cd2-b433-f609b45c1eb5.png)
-![](https://user-images.githubusercontent.com/114450184/199064703-579c19a9-4bcb-42f9-9b30-12d017cd36fd.png)
-
-**-E**
-* The command option terminates the less interface upon scrolling to the end of the file, eliminating the need to press q if the entire contents has been viewed. 
-```
-less -E ./technical/911report/preface.txt
-```
 
 ## Find Options
 
-**-mindepth**
-* Sets a floor for the depth of directory path for the file names printed.
+**-min/max depth**
+* Sets a floor or ceiling for the depth of directory path for the file names printed.
 * Helpful for maintaining a constant working directory, so printing files from different directory depths can be done without changing the working directory. 
 ```
 find ./technical -mindepth 4
 ./technical/government/About_LSC/fo/fjs
 ```
-* Created a folder and file with depth 4 to demonstrate the command only outputting files with the specified minimum depth.
+* As shown in the path of this file, the depth from the /technical folder is 4, and since it is the only file with this depth it is the only file name printed.
+
+```
+find ./technical -mindepth 3 -maxdepth 5 
+./technical/government/About_LSC/LegalServCorp_v_VelazquezSyllabus.txt
+./technical/government/About_LSC/Progress_report.txt
+./technical/government/About_LSC/Strategic_report.txt
+./technical/government/About_LSC/fo/fjs
+```
+* In this example, there is both a floor and ceiling, and paths with different depths between these are printed.
+
+```
+find ./technical -maxdepth 1
+./technical
+./technical/government
+./technical/plos
+./technical/biomed
+./technical/where
+./technical/911report
+```
+* This example demonstrates that maxdepth limits the output to files and folders with a certain depth, so only these files and folders are printed.
+
 
 **-empty**
 ```
@@ -41,9 +42,60 @@ find ./technical -empty
 ./technical/biomed/what.txt
 ```
 * Searches for empty folders and files. 
-* Created two empty files in different paths to demonstrate. 
+* Created two empty files in different paths to demonstrate.
+
+```
+find ./technical -empty
+```
+* When there are no empty files, there is no output. There is also no error thrown.
+
+```
+find ./technical -empty -mindepth 3
+./technical/government/About_LSC/fo/fjs
+```
+
+* Used with mindepth to find empty files after a certain path depth.
+* This command is useful for finding obsolete files.
 
 **-size**
+
+```
+find ./technical -size 0k
+./technical/government/About_LSC/fo/fjs
+```
+* This can be used to the same effect as -empty to find empty files of no size. 
+
+```
+find ./technical -size -2k 
+./technical
+./technical/government
+./technical/government/About_LSC
+./technical/government/About_LSC/fo
+./technical/government/About_LSC/fo/fjs
+./technical/government/Env_Prot_Agen
+./technical/government/Alcohol_Problems
+./technical/government/Post_Rate_Comm
+./technical/government/Media/Helping_Hands.txt
+./technical/government/Media/Campaign_Pays.txt
+./technical/government/Media/Fire_Victims_Sue.txt
+./technical/government/Media/Court_Keeps_Judge_From.txt
+./technical/government/Media/It_Pays_to_Know.txt
+./technical/government/Media/Self-Help_Website.txt
+./technical/government/Media/Justice_requests.txt
+./technical/government/Media/Wilmington_lawyer.txt
+./technical/government/Media/Lawyer_Web_Survey.txt
+./technical/plos/pmed.0020048.txt
+./technical/plos/pmed.0020028.txt
+./technical/plos/pmed.0020191.txt
+./technical/plos/pmed.0020226.txt
+./technical/plos/pmed.0020192.txt
+./technical/plos/pmed.0020157.txt
+./technical/plos/pmed.0020082.txt
+./technical/plos/pmed.0020120.txt
+./technical/911report
+```
+* This command can also be used to find files with size under a certain amount. 
+
 ```
 find ./technical -size +0k -size -1k  
 ./technical
@@ -57,34 +109,8 @@ find ./technical -size +0k -size -1k
 ./technical/plos/pmed.0020226.txt
 ./technical/911report
 ```
-* This command allows you to specify a range of file sizes to search for in a directory. 
-* In this example, I searched for files with size under 1 kilobyte.
+* In this example, I searched for non empty files with size under 1 kilobyte. As shown, you can use this format to search for files within a certain file size range.
+* In general, this is useful for finding outlier files: files with unusual size. 
 
-## Grep Options
 
-**-c**
-```
-grep -c  "security" ./technical/911report/chapter-1.txt
-18
-```
-* This option outputs the number of lines in a file that contain the search query. 
-* This is helpful for quickly monitoring specific changes to a file that contains output for something.
 
-**-v**
-```
-grep -v "the" ./technical/911report/test6.txt 
-where
-g
-```
-
-* This option outputs the lines that do not contain the search query. 
-* This is helpful for parsing files containing output that is very similar.
-
-**-i**
-```
-grep -i "the" ./technical/911report/test6.txt
-the 
-The
-```
-* This option removes the default case sensitivity of grep.
-* This could be helpful for searching files for specific information regardless of case.
